@@ -1,0 +1,7 @@
+bin
+gen
+libs/android-support-v4.jar
+.settings
+.classpath
+.project
+project.properties
