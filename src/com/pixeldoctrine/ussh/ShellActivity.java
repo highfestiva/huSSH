@@ -1,8 +1,6 @@
 package com.pixeldoctrine.ussh;
 
 
-import com.pixeldoctrine.ussh.R;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
@@ -11,6 +9,11 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import com.pixeldoctrine.ussh.shell.ConsoleInput;
+import com.pixeldoctrine.ussh.shell.ConsoleOutput;
+import com.pixeldoctrine.ussh.shell.SshClient;
 
 public class ShellActivity extends Activity {
 
@@ -28,13 +31,23 @@ public class ShellActivity extends Activity {
 	    String info = String.format(getResources().getString(R.string.connecting_info), hname, port, uname);
 
         setContentView(R.layout.activity_shell);
-    	EditText con = (EditText) findViewById(R.id.console);
-    	con.setText(info + "\n");
+    	TextView conWidget = (TextView) findViewById(R.id.console);
+    	conWidget.setText(info + "\n", TextView.BufferType.SPANNABLE);
+    	EditText inputWidget = (EditText) findViewById(R.id.input);
 		// Show the Up button in the action bar.
 		setupActionBar();
 
-		sshClient = new SshClient(new ConsoleInput(con), new ConsoleOutput(con));
+		ConsoleInput in = new ConsoleInput(inputWidget);
+		ConsoleOutput out = new ConsoleOutput(conWidget);
+		sshClient = new SshClient(in, out);
 		sshClient.backgroundConnect(hname, port, uname);
+	}
+
+	@Override
+	public void onDestroy() {
+		sshClient.disconnect();
+		sshClient = null;
+		super.onDestroy();
 	}
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)

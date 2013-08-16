@@ -1,10 +1,9 @@
 package com.pixeldoctrine.ussh;
 
-import com.pixeldoctrine.ussh.R;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,13 +15,18 @@ public class MainActivity extends Activity {
 	public final static String PORT		= "com.pixeldoctrine.ussh.PORT";
 	public final static String USERNAME	= "com.pixeldoctrine.ussh.USERNAME";
 	private String hostname = "pixeldoctrine.dyndns.org";
-	private String port = "22";
-	private String username = "";
+	private String port = "2202";
+	private String username = "jonte";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.e(getClass().toString(), "Starting app!");
+
+        /*byte[] colorTermData = { 0x1b,'[','0','0','m',0x1b,'[','0','1',';','3','4','m', 'H','e','l','l','o',' ','W','o','r','l','d','!' };
+        String html = new ColorTerm2HtmlConverter().convert(new String(colorTermData));
+        Log.e(getClass().toString(), html);*/
     }
 
     @Override

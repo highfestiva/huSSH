@@ -1,4 +1,4 @@
-package com.pixeldoctrine.ussh;
+package com.pixeldoctrine.ussh.shell;
 
 public class SshConnectParams {
 	public String hostname;
