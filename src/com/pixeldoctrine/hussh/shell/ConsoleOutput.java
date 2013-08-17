@@ -1,4 +1,4 @@
-package com.pixeldoctrine.ussh.shell;
+package com.pixeldoctrine.hussh.shell;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -13,9 +13,9 @@ import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
 import android.widget.TextView;
 
-import com.pixeldoctrine.ussh.util.ColorTermPrinter;
-import com.pixeldoctrine.ussh.util.ColorTerminal;
-import com.pixeldoctrine.ussh.util.ElementStyle;
+import com.pixeldoctrine.hussh.util.ColorTermPrinter;
+import com.pixeldoctrine.hussh.util.ColorTerminal;
+import com.pixeldoctrine.hussh.util.ElementStyle;
 
 public class ConsoleOutput extends OutputStream implements ColorTerminal {
 
@@ -25,6 +25,7 @@ public class ConsoleOutput extends OutputStream implements ColorTerminal {
 	private int offset = 0;
 	private boolean doPost = true;
 	private boolean pipeToNull = false;
+	private boolean lastWasCR;
 
 	public ConsoleOutput(TextView console) {
 		this.console = console;
@@ -45,13 +46,41 @@ public class ConsoleOutput extends OutputStream implements ColorTerminal {
 
 	@Override
 	public void rawPrint(String text) {
+		boolean eraseLine = false;
+		if (lastWasCR) {
+			if (!text.startsWith("\n")) {
+				eraseLine = true;
+			}
+		} else if (text.startsWith("\r") && !text.startsWith("\r\n")) {
+			if (text.length() == 1) {
+				lastWasCR = true;
+				return;
+			}
+			eraseLine = true;
+		}
+		lastWasCR = false;
+		if (eraseLine) {
+			String currentText = console.getText().toString();
+			int lastLineStart = currentText.lastIndexOf('\n') + 1;
+			if (lastLineStart < currentText.length()) {
+				currentText = currentText.substring(0, lastLineStart);
+				console.setText(currentText+text);
+				return;
+			}
+		}
+		if (text.equals("\b")) {
+			CharSequence currentText = console.getText();
+		    currentText = currentText.subSequence(0, currentText.length() - 1);
+		    console.setText(currentText);
+			return;
+		}
 		console.append(text);
 	}
 
 	@Override
 	public void rawPrint(String text, ElementStyle style) {
 		int start = console.getText().length();
-	    console.append(text);
+		rawPrint(text);
 	    int end = console.getText().length();
 
 	    Spannable spannableText = (Spannable) console.getText();
@@ -105,7 +134,7 @@ public class ConsoleOutput extends OutputStream implements ColorTerminal {
 		console.getPaint().getTextBounds(text, 0, text.length(), bounds);
 		int h5 = bounds.bottom;
 		return console.getHeight() * 5 / h5;*/
-		return console.getHeight() / 10;	// TODO: font height a bit hard-coded...
+		return console.getHeight() / 15;	// TODO: font height a bit hard-coded...
 	}
 
 	private void post() {

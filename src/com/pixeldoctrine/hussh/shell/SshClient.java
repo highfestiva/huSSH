@@ -1,4 +1,4 @@
-package com.pixeldoctrine.ussh.shell;
+package com.pixeldoctrine.hussh.shell;
 
 import java.util.Locale;
 
@@ -41,9 +41,10 @@ public class SshClient {
 	}
 
 	public void disconnect() {
-		channel.disconnect();
 		try {
+			channel.disconnect();
 			channel.getSession().disconnect();
+			inStream.appendText("\n");	// To release hanging connect thread if waiting for password.
 		} catch (Exception e) {
 		}
 	}
@@ -58,11 +59,13 @@ public class SshClient {
 		}
 		public String getPassword() {
 			String pw = inStream.waitLine();
+			outStream.print("\n");
 			inStream.setPasswordMode(false);
 			return pw;
 		}
 		public String getPassphrase() {
 			String pw = inStream.waitLine();
+			outStream.print("\n");
 			inStream.setPasswordMode(false);
 			return pw;
 		}
@@ -81,8 +84,7 @@ public class SshClient {
 		}
 		public String[] promptKeyboardInteractive(String destination, String name, String instruction,
 				String[] prompt, boolean[] echo) {
-			outStream.print("promptKeyboardInteractive\n");
-			outStream.print(destination + "\n" + name + "\n" + instruction + "\n");
+			outStream.print(destination + ", " + name + ", " + instruction + "\n");
 			for (String s : prompt) {
 				outStream.print(s + "\n");
 			}
@@ -97,15 +99,11 @@ public class SshClient {
 				try {
 					connect(param.hostname, param.port, param.username);
 					try {
-						Thread.sleep(100);
-						outStream.setPipeToNull(true);
-						int w = outStream.getCharWidth();
+						int w = outStream.getCharWidth() - 1;
 						int h = outStream.getCharHeight();
 						inStream.appendText("stty cols " + w + "; stty rows " + h + "\n");
-						Thread.sleep(100);
 					} catch (Exception e) {
 					}
-					outStream.setPipeToNull(false);
 					while (channel.isConnected()) {
 						Thread.sleep(1000);
 					}
@@ -122,8 +120,8 @@ public class SshClient {
 				outStream.print(error.getMessage() + "\n");
 			} else {
 				outStream.print("\nConnection to " + host + " closed.\n");
-				inStream.close();
 			}
+			inStream.close();
 		}
 	}
 }

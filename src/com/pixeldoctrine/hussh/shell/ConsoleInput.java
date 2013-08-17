@@ -1,4 +1,4 @@
-package com.pixeldoctrine.ussh.shell;
+package com.pixeldoctrine.hussh.shell;
 
 import java.io.InputStream;
 import java.util.Arrays;
@@ -81,10 +81,12 @@ public class ConsoleInput extends InputStream {
 	@SuppressLint("NewApi")
 	public synchronized int removeText(int byteCount) {
 		if (data.length >= byteCount) {
-			data = Arrays.copyOf(data, byteCount);
+			data = Arrays.copyOfRange(data, data.length-byteCount, data.length);
 		} else if (data.length > 0) {
 			byteCount -= data.length;
 			data = new byte[0];
+		} else {
+			byteCount = 0;
 		}
 		notify();
 		return byteCount;

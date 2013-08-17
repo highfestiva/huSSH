@@ -1,4 +1,4 @@
-package com.pixeldoctrine.ussh.util;
+package com.pixeldoctrine.hussh.util;
 
 public class ElementStyle {
 

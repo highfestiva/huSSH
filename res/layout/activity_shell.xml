@@ -6,31 +6,49 @@
     android:orientation="vertical"
     tools:context=".ShellActivity" >
 
-    <TextView
-        android:id="@+id/console"
+    <ScrollView
+        android:id="@+id/recentScrollView"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_gravity="bottom"
         android:layout_weight="1"
-        android:background="#444"
-        android:fontFamily="Courier New"
-        android:gravity="bottom"
-        android:textColor="#999"
-        android:textColorHint="#777"
-        android:textSize="10sp" />
+        android:fillViewport="true" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/console"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:background="#444"
+                android:fontFamily="Courier New"
+                android:gravity="bottom"
+                android:includeFontPadding="false"
+                android:linksClickable="true"
+                android:scrollHorizontally="true"
+                android:scrollbarAlwaysDrawVerticalTrack="false"
+                android:textColor="#999"
+                android:textColorHint="#777"
+                android:textSize="10sp" />
+
+        </LinearLayout>
+    </ScrollView>
 
     <EditText
         android:id="@+id/input"
         android:layout_width="fill_parent"
-        android:layout_height="20dp"
-        android:layout_gravity="bottom"
+        android:layout_height="15dp"
         android:background="#fff"
         android:ems="10"
         android:fontFamily="Courier New"
         android:gravity="bottom"
         android:inputType="textNoSuggestions|textMultiLine"
-        android:paddingBottom="0dp"
-        android:paddingTop="1dp"
         android:textSize="12sp" >
 
         <requestFocus />

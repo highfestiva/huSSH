@@ -1,4 +1,4 @@
-package com.pixeldoctrine.ussh.util;
+package com.pixeldoctrine.hussh.util;
 
 import android.annotation.SuppressLint;
 
@@ -89,7 +89,7 @@ public class ColorTermPrinter {
 				}
 				i = 1 + ((seqEnd!=-1)? seqEnd : i);
 			} else {
-				sb.append(maskCharacter(line.charAt(i)));
+				sb.append(line.charAt(i));
 				++i;
 			}
 		}
@@ -317,27 +317,6 @@ public class ColorTermPrinter {
 		}
 
 		return true;
-	}
-
-	private static String maskCharacter(char c) {
-		switch (c) {
-			case '<' :
-				return "&lt;";
-			case '>' :
-				return "&gt;";
-			case '&' :
-				return "&amp;";
-			case '\"' :
-				return "&quot;";
-			case '\t' : // see deletion of non-printable chars below
-				return "\t";
-			default :
-				if (c > 0x1f) {	// Printable?
-					return String.valueOf(c);
-				} else {
-					return "";
-				}
-		}
 	}
 
 	/*

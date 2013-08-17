@@ -9,7 +9,8 @@
         android:id="@+id/hostname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/host_hint" >
+        android:hint="@string/host_hint"
+        android:inputType="textUri" >
 
         <requestFocus />
     </EditText>
@@ -21,6 +22,7 @@
         android:ems="10"
         android:hint="@string/port_hint"
         android:inputType="number" >
+
     </EditText>
 
     <EditText
@@ -28,12 +30,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/username_hint" />
+        android:hint="@string/username_hint"
+        android:inputType="textNoSuggestions" />
 
     <Button
+        android:id="@+id/connectButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onConnect"
         android:text="@string/button_connect" />
+
+    <ScrollView
+        android:id="@+id/recentScrollView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:id="@+id/recentList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:gravity="top"
+            android:orientation="vertical" >
+
+        </LinearLayout>
+    </ScrollView>
 
 </TableLayout>

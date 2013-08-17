@@ -1,4 +1,4 @@
-package com.pixeldoctrine.ussh;
+package com.pixeldoctrine.hussh;
 
 
 import android.annotation.TargetApi;
@@ -11,9 +11,11 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.pixeldoctrine.ussh.shell.ConsoleInput;
-import com.pixeldoctrine.ussh.shell.ConsoleOutput;
-import com.pixeldoctrine.ussh.shell.SshClient;
+import com.pixeldoctrine.hussh.shell.ConsoleInput;
+import com.pixeldoctrine.hussh.shell.ConsoleOutput;
+import com.pixeldoctrine.hussh.shell.SshClient;
+import com.pixeldoctrine.hussh.shell.SshConnectParams;
+import com.pixeldoctrine.hussh.R;
 
 public class ShellActivity extends Activity {
 
@@ -28,7 +30,8 @@ public class ShellActivity extends Activity {
 	    String hname = intent.getStringExtra(MainActivity.HOSTNAME);
 	    int port  = intent.getIntExtra(MainActivity.PORT, 22);
 	    String uname = intent.getStringExtra(MainActivity.USERNAME);
-	    String info = String.format(getResources().getString(R.string.connecting_info), hname, port, uname);
+	    SshConnectParams params = new SshConnectParams(hname, port, uname);
+	    String info = String.format(getResources().getString(R.string.connecting_info), params.toString());
 
         setContentView(R.layout.activity_shell);
     	TextView conWidget = (TextView) findViewById(R.id.console);
