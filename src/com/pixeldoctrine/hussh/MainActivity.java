@@ -122,7 +122,8 @@ public class MainActivity extends Activity implements OnClickListener {
 			Button recentButton = new Button(this);
 			recentButton.setText(param.toString());
 			recentButton.setBackgroundColor(Color.WHITE);
-			recentButton.setTextColor(Color.rgb(36,6,17));
+			recentButton.setTextColor(Color.rgb(46,6,17));
+			recentButton.setTextSize(14.0f);
 			recentButton.setOnClickListener(this);
 			recentList.addView(recentButton);
 		}

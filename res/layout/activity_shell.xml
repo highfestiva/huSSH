@@ -48,7 +48,7 @@
         android:ems="10"
         android:fontFamily="Courier New"
         android:gravity="bottom"
-        android:inputType="textNoSuggestions|textMultiLine"
+        android:inputType="textMultiLine|textUri"
         android:textSize="12sp" >
 
         <requestFocus />

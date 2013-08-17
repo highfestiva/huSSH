@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/username_hint"
-        android:inputType="textNoSuggestions" />
+        android:inputType="textUri" />
 
     <Button
         android:id="@+id/connectButton"
