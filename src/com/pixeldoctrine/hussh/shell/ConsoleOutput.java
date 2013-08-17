@@ -82,6 +82,9 @@ public class ConsoleOutput extends OutputStream implements ColorTerminal {
 		int start = console.getText().length();
 		rawPrint(text);
 	    int end = console.getText().length();
+	    if (end-start < text.length()) {
+	    	start = Math.max(0, end-text.length());
+	    }
 
 	    Spannable spannableText = (Spannable) console.getText();
 	    spannableText.setSpan(new ForegroundColorSpan(style.fgColor.getIntColor()), start, end, 0);

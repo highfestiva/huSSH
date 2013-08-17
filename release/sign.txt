@@ -1,0 +1,3 @@
+/c/Program/Java/jdk1.7.0_25/bin/jarsigner.exe -keystore google_play.keystore -sigalg SHA1withRSA -digestalg SHA1 huSSH.apk alias_name
+/c/Program/Java/jdk1.7.0_25/bin/jarsigner.exe -verify -verbose huSSH.apk
+/c/Program/Java/sdk/tools/zipalign.exe 4 huSSH.apk huSSH_aligned.apk
